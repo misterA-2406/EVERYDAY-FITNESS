@@ -1,0 +1,91 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "A registered user of the gym app.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "name": { "type": "string" },
+        "role": { "type": "string", "enum": ["user", "admin"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "role", "createdAt"]
+    },
+    "Metric": {
+      "title": "Metric",
+      "description": "A BMI calculation record.",
+      "type": "object",
+      "properties": {
+        "bmi": { "type": "number" },
+        "weight": { "type": "number" },
+        "height": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["bmi", "weight", "height", "createdAt"]
+    },
+    "Onboarding": {
+      "title": "Onboarding",
+      "description": "Fitness goal quiz results.",
+      "type": "object",
+      "properties": {
+        "goal": { "type": "string" },
+        "experience": { "type": "string" },
+        "commitment": { "type": "string" },
+        "completedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["goal", "experience", "commitment", "completedAt"]
+    },
+    "Lead": {
+      "title": "Lead",
+      "description": "A captured lead for trial or consultation.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "phone": { "type": "string" },
+        "interest": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "email", "interest", "createdAt"]
+    },
+    "SiteContent": {
+      "title": "SiteContent",
+      "description": "Admin editable site content.",
+      "type": "object",
+      "properties": {
+        "heroTitle": { "type": "string" },
+        "heroSubtitle": { "type": "string" },
+        "offers": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["heroTitle", "heroSubtitle", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "User profiles."
+    },
+    "/users/{userId}/metrics/{metricId}": {
+      "schema": { "$ref": "#/entities/Metric" },
+      "description": "User BMI history."
+    },
+    "/users/{userId}/onboarding/{onboardingId}": {
+      "schema": { "$ref": "#/entities/Onboarding" },
+      "description": "User quiz results."
+    },
+    "/leads/{leadId}": {
+      "schema": { "$ref": "#/entities/Lead" },
+      "description": "Captured leads."
+    },
+    "/content/site": {
+      "schema": { "$ref": "#/entities/SiteContent" },
+      "description": "Global site content."
+    }
+  }
+}
